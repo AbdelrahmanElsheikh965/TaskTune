@@ -5,7 +5,11 @@ const read = async (req) => {
     return await Todo.find({ status: status }).limit(limit).skip(skip)
 }
 
-const create = async (req) =>  Todo.create(req.body).then(newTodo => newTodo)
+const create = async (req, res) =>  {
+    const maxId = await Todo.findOne({}, '_id').sort({ '_id': -1 }).limit(1)
+    req.body._id = maxId ? maxId._id + 1 : 1 
+    return Todo.create(req.body);
+}
 
 const readUserTodos = async (id) => await Todo.find({userId: id})
 
@@ -13,11 +17,11 @@ const editUserTodo = async (userId, todoId, data) => {
     const targetTodo = await Todo.findOne({ userId: userId, _id: todoId })
     targetTodo.set(data);
     await targetTodo.save();
+    // for assuring
+    return await Todo.findOne({ userId: userId, _id: todoId })
 }
 
-const deleteUserTodo = async (userId, todoId) => {
-    await Todo.findOneAndDelete({ userId: userId, _id: todoId })
-}
+const deleteUserTodo = async (userId, todoId) => await Todo.findOneAndDelete({ userId: userId, _id: todoId })
 
 module.exports = {
     read,

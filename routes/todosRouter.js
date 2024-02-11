@@ -22,7 +22,7 @@ router.patch('/:todoId', async (req, res) => {
     try {
         const {userId, data} = req.body
         const todo = await todoController.editUserTodo(userId, req.params.todoId, data);
-        res.status(200).json(`Updated Successfully`);
+        res.status(200).json(todo);
     } catch (error) {
         res.status(422).json('Unprocessable Content');
     }
