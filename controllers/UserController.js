@@ -3,7 +3,7 @@ const User = require('../models/User')
 // Only project data to firstName excluding _id
 const read = async () => await User.find({}, 'firstName -_id')
 
-const create = async (req, res) => await User.create(req.body)
+const create = async (req) => User.create(req.body).then( user => user )
 
 const deleteUser = async (id) => await User.findByIdAndDelete(id)
 

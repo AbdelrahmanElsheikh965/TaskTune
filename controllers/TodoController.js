@@ -5,7 +5,7 @@ const read = async (req) => {
     return await Todo.find({ status: status }).limit(limit).skip(skip)
 }
 
-const create = async (req, res) =>  Todo.create(req.body).then(newTodo => newTodo)
+const create = async (req) =>  Todo.create(req.body).then(newTodo => newTodo)
 
 const readUserTodos = async (id) => await Todo.find({userId: id})
 

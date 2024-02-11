@@ -12,7 +12,11 @@ const TodoSchema = new mongoose.Schema({
         default: 'to-do',
     },
     tags: {
-        type: [String]
+        type: [String],
+        // validate: {
+        //     validator: (tags) => tags.every( tag => tag.length <= 10 ),
+        //     message: 'Tag min length validation failed'
+        //   }
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,

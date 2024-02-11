@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
 // Register a new user
 router.post('/', async (req, res) => {
     const created = await userController.create(req, res);
-    res.status(200).json(`Created Successfully`);
+    res.status(200).json(created);
 });
 
 
