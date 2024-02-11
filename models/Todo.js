@@ -11,10 +11,14 @@ const TodoSchema = new mongoose.Schema({
         enum: ['to-do', 'in-progress', 'done'],
         default: 'to-do',
     },
-    tags: { // No required: true means optional field.
+    tags: {
         type: [String]
     },
-
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Users',
+    },
 }, { timestamps: true })
 
 const todos = mongoose.model('Todos', TodoSchema);
