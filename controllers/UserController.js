@@ -7,7 +7,10 @@ const create = async (req) => User.create(req.body).then( user => user )
 
 const deleteUser = async (id) => await User.findByIdAndDelete(id)
 
-const updateUserData  = async (userId, data) => await User.findOneAndUpdate({_id: userId}, data)
+const updateUserData  = async (userId, data) => User.findOneAndUpdate({_id: userId}, data).then( function () {
+    // Return the newly updated value.
+    return User.findById(userId);
+})
 
 
 module.exports = {

@@ -9,21 +9,33 @@ router.get('/', async (req, res) => {
 
 // User can add a new todo
 router.post('/', async (req, res) => {
-    const created = await todoController.create(req, res);
-    res.status(200).json(created);
+    try {
+        const created = await todoController.create(req, res);
+        res.status(200).json(created);
+    } catch (error) {
+        res.status(422).json('Unprocessable Content');
+    }                   
 });
 
 // User can edit his own todos
 router.patch('/:todoId', async (req, res) => {
-    const {userId, data} = req.body
-    const todo = await todoController.editUserTodo(userId, req.params.todoId, data);
-    res.status(200).json(`Updated Successfully`);
+    try {
+        const {userId, data} = req.body
+        const todo = await todoController.editUserTodo(userId, req.params.todoId, data);
+        res.status(200).json(`Updated Successfully`);
+    } catch (error) {
+        res.status(422).json('Unprocessable Content');
+    }
 });
 
 // User can delete his own todos
 router.delete('/:todoId', async (req, res) => {
-   await todoController.deleteUserTodo(req.body.userId, req.params.todoId);
-   res.status(200).json(`Deleted Successfully`);
+try {
+       await todoController.deleteUserTodo(req.body.userId, req.params.todoId);
+       res.status(200).json(`Deleted Successfully`);
+} catch (error) {
+    res.status(404).json('Not found resource');
+}
 });
 
 module.exports = router
