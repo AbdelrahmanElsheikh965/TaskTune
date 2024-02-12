@@ -29,7 +29,16 @@ const UserSchema = new mongoose.Schema({
         type: Date
     },
 
-})
+},
+{
+    toJSON: {
+      transform: (doc, ret) => {
+        ret.password = undefined;
+        return ret;
+      },
+    },
+}
+)
 
 UserSchema.pre('save', function (next) {
     bcrypt.hash(this.password, 8, (err, hash) => {

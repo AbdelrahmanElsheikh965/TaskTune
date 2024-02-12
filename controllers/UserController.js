@@ -1,5 +1,6 @@
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 // Only project data to firstName excluding _id
 const read = async () => await User.find({}, 'firstName -_id')
@@ -16,7 +17,8 @@ const updateUserData  = async (userId, data) => User.findOneAndUpdate({_id: user
 const login = async(username, password) => {
     const user = await User.findOne({username: username});
     const result = await user.comparePasswords(password);
-    if (result) return result;
+    const token = jwt.sign({ userId: user._id }, '123', { expiresIn: '1h'});
+    if (token && result) return token;
     throw new Error
 }
 

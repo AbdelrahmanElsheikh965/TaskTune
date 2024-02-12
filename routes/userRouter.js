@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const userController = require('../controllers/UserController')
 const todoController = require('../controllers/TodoController')
+const jwt = require('jsonwebtoken')
 
 // Get all
 router.get('/', async (req, res) => {
@@ -22,7 +23,7 @@ router.post('/', async (req, res) => {
 router.post('/login', async (req, res) => {
     try {
         const created = await userController.login(req.body.username, req.body.password);
-        res.status(200).json('logged in');
+        res.status(200).json({ "token": created });
     } catch (error) {
         res.status(422).json("Check your input data");
     }
