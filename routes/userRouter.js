@@ -18,6 +18,17 @@ router.post('/', async (req, res) => {
     }
 });
 
+// Login a user -------------------------------------------------------------
+router.post('/login', async (req, res) => {
+    try {
+        const created = await userController.login(req.body.username, req.body.password);
+        res.status(200).json('logged in');
+    } catch (error) {
+        res.status(422).json("Check your input data");
+    }
+});
+// --------------------------------------------------------------------------
+
 
 // Delete a user by id
 router.delete('/:id', async (req, res) => {

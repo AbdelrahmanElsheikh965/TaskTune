@@ -1,4 +1,5 @@
 const User = require('../models/User')
+const bcrypt = require('bcrypt')
 
 // Only project data to firstName excluding _id
 const read = async () => await User.find({}, 'firstName -_id')
@@ -12,10 +13,17 @@ const updateUserData  = async (userId, data) => User.findOneAndUpdate({_id: user
     return User.findById(userId);
 })
 
+const login = async(username, password) => {
+    const user = await User.findOne({username: username});
+    const result = await user.comparePasswords(password);
+    if (result) return result;
+    throw new Error
+}
 
 module.exports = {
     read,
     create,
     deleteUser,
-    updateUserData
+    updateUserData,
+    login
 }

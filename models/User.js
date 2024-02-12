@@ -33,11 +33,17 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.pre('save', function (next) {
     bcrypt.hash(this.password, 8, (err, hash) => {
+        
         if (err) return next(err);
+
         this.password = hash;
         next();
     })
 })
+
+UserSchema.methods.comparePasswords = async function(password) {
+    return await bcrypt.compare(password, this.password)
+}
 
 const users = mongoose.model('Users', UserSchema);
 
