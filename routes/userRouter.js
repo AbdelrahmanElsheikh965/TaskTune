@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const userController = require('../controllers/UserController')
-const todoController = require('../controllers/TodoController')
-const jwt = require('jsonwebtoken')
+const verifyToken = require('../middlewares/AuthMiddleware')
 
 // Get all
 router.get('/', async (req, res) => {
@@ -11,24 +10,18 @@ router.get('/', async (req, res) => {
 
 // Register a new user
 router.post('/', async (req, res) => {
-    try {
-        const created = await userController.create(req, res);
-        res.status(200).json(created);
-    } catch (error) {
-        res.status(422).json("Check your input data");
-    }
+    await userController.create(req, res);
 });
 
-// Login a user -------------------------------------------------------------
+// Login a user
 router.post('/login', async (req, res) => {
     try {
         const created = await userController.login(req.body.username, req.body.password);
-        res.status(200).json({ "token": created });
+        res.status(200).json(created);
     } catch (error) {
-        res.status(422).json("Check your input data");
+        res.status(401).json("Check your input data | authentication failed");
     }
 });
-// --------------------------------------------------------------------------
 
 
 // Delete a user by id
@@ -41,25 +34,17 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
-// Edit the data of a user by id
-router.patch('/:id', async (req, res) => {
-    try {
-        const user = await userController.updateUserData(req.params.id, req.body);
-        res.status(200).json({user : user});
-    } catch (error) {
-        res.status(404).json('Not found resource');
-    }
+// User can get his data
+router.get('/me', verifyToken, async (req, res) => {
+    const userData = await userController.readMyData(req.body.userId)
+    res.status(200).json({"Message" : "Success", "Data":userData});
 })
 
+// User can edit his data
+router.put('/update-me', verifyToken, async (req, res) => {
+    const userData = await userController.updateUserData(req.body)
+    res.status(200).json({"Message" : "Success", "Data":userData});
+})
 
-// Get all todos of a specific user
-router.get('/:id/todos', async (req, res) => {
-    try {
-        const todos = await todoController.readUserTodos(req.params.id);
-        res.json(todos);
-    } catch (error) {
-        res.status(404).json('Not found resource');
-    }
-});
 
 module.exports = router

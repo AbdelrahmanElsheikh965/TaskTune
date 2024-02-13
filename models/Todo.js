@@ -18,6 +18,7 @@ const TodoSchema = new mongoose.Schema({
     tags: {
         type: [String],
         // validate: {
+            // sub schema
         //     validator: (tags) => tags.every( tag => tag.length <= 10 ),
         //     message: 'Tag min length validation failed'
         //   }

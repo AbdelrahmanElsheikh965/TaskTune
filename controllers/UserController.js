@@ -1,29 +1,38 @@
 const User = require('../models/User')
-const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
-// Only project data to firstName excluding _id
+const readMyData = async (id) => await User.find({_id: id})
+
 const read = async () => await User.find({}, 'firstName -_id')
 
-const create = async (req) => User.create(req.body).then( user => user )
+const create = async (req, res) => {
+    try {
+        await User.create(req.body).then( user => user)
+        const registeredUser = await User.find({username: req.body.username})
+        const token = jwt.sign({ userId: registeredUser._id }, '123', { expiresIn: '1h'});
+        req.body.password = undefined   // don't return password
+        res.status(200).json({"user": req.body, "token": token});
+    } catch (error) {
+        res.status(422).json("Check your input data");
+    }
+}
+const deleteUser = async (id) => await User.findByIdAndDelete(id )
 
-const deleteUser = async (id) => await User.findByIdAndDelete(id)
-
-const updateUserData  = async (userId, data) => User.findOneAndUpdate({_id: userId}, data).then( function () {
-    // Return the newly updated value.
-    return User.findById(userId);
+const updateUserData  = async (bodyData) => User.findOneAndUpdate({_id: bodyData.userId}, bodyData).then(function () {
+    return User.findById(bodyData.userId);
 })
 
 const login = async(username, password) => {
     const user = await User.findOne({username: username});
     const result = await user.comparePasswords(password);
     const token = jwt.sign({ userId: user._id }, '123', { expiresIn: '1h'});
-    if (token && result) return token;
+    if (token && result) return {"user": user, "token": token};
     throw new Error
 }
 
 module.exports = {
     read,
+    readMyData,
     create,
     deleteUser,
     updateUserData,

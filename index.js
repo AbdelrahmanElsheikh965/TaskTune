@@ -10,13 +10,6 @@ mongoose.connect('mongodb://127.0.0.1/REST-API')
 // Middleware to parse JSON data
 app.use(express.json());
 
-
-// Global Error Handling Middleware
-// app.use((err, req, res, next) => {
-//     res.status(err.status).json({ error: err.message });
-// });
-
-  
 // use router for todos resource
 app.use('/todos', todosRouter)
 
