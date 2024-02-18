@@ -2,13 +2,71 @@ const router = require('express').Router();
 const userController = require('../controllers/UserController')
 const verifyToken = require('../middlewares/AuthMiddleware')
 
-// Get all
+
+const swaggerJsDoc = require('swagger-jsdoc')
+const swaggerUi = require('swagger-ui-express')
+
+const swaggerOptions = {
+    swaggerDefinition: {
+        info: {
+            title: 'Task Tune API',
+            version: '1.5.0'
+        }
+    },
+    apis: ['./routes/userRouter.js']
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions)
+
+
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     description: Get all users
+ *     responses:
+ *       200:
+ *         description: Success
+ *       404:
+ *         description: No data
+ */
 router.get('/', async (req, res) => {
     const users = await userController.read();
     res.json(users);
 });
 
-// Register a new user
+
+/**
+ * @swagger
+ *  /users:
+ *   post:
+ *     summary: Registers a new user.
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - in: body
+ *         name: user
+ *         description: The user to create.
+ *         schema:
+ *           type: object
+ *           required:
+ *             - userName
+ *             - firstName
+ *             - lastName
+ *             - password
+ *           properties:
+ *             userName:
+ *               type: string
+ *             firstName:
+ *               type: string
+ *             lastName:
+ *               type: string
+ *             password:
+ *               type: string
+ *     responses:
+ *       201:
+ *         description: Created
+ */
 router.post('/', async (req, res) => {
     await userController.create(req, res);
 });
@@ -46,5 +104,6 @@ router.put('/update-me', verifyToken, async (req, res) => {
     res.status(200).json({"Message" : "Success", "Data":userData});
 })
 
+router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 module.exports = router

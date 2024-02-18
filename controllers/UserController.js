@@ -11,7 +11,7 @@ const create = async (req, res) => {
         const registeredUser = await User.find({username: req.body.username})
         const token = jwt.sign({ userId: registeredUser._id }, '123', { expiresIn: '1h'});
         req.body.password = undefined   // don't return password
-        res.status(200).json({"user": req.body, "token": token});
+        res.status(201).json({"user": req.body, "token": token});
     } catch (error) {
         res.status(422).json("Check your input data");
     }
