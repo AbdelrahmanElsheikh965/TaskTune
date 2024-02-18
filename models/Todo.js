@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'),
+       autoId = require('mongoose-auto-increment');
 
 const TodoSchema = new mongoose.Schema({
     _id: {
@@ -29,6 +30,9 @@ const TodoSchema = new mongoose.Schema({
         ref: 'Users',
     },
 }, { timestamps: true })
+
+autoId.initialize(mongoose.connection);
+TodoSchema.plugin(autoId.plugin, 'todos');
 
 const todos = mongoose.model('Todos', TodoSchema);
 

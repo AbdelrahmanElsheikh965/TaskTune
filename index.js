@@ -5,7 +5,13 @@ const app = express();
 const mongoose = require('mongoose');
 
 // Connect to database
-mongoose.connect('mongodb://127.0.0.1/REST-API')
+mongoose.connect('mongodb://127.0.0.1/REST-API',  { 
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+ })
 
 // Middleware to parse JSON data
 app.use(express.json());
