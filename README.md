@@ -4,3 +4,4 @@ Task Tune is a todo app for managing users' todos
 
 Coming soon : 
 1. Swagger full documentation
+2. Adding some test cases using the appropriate test tool
