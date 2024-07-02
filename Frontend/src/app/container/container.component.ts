@@ -21,7 +21,8 @@ ngOnInit(){
     this.dataService.getServerSentEvent('http://localhost:3000/todos/all?limit=10&skip=0&status=to-do')
     .subscribe({
       next: (data) => {
-        this.productsData.push(data)
+        console.log(`data: ${data}`);        
+        this.productsData = data;
       },
       error: (error) => console.error('SSE error:', error)
     });

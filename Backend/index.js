@@ -77,7 +77,9 @@ app.get(
     const changeStream = Todo.watch();
 
     // Listen for change events
-    changeStream.on("change", async () => await sendUpdatedTodos());
+    changeStream.on("change", async () => {
+      await sendUpdatedTodos()
+    });
 
     req.on("close", () => {
       console.log('Client disconnected');
