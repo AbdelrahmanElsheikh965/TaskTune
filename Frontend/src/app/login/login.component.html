@@ -1,0 +1,69 @@
+<div class="form-comments">
+    <div class="title-box-2">
+        <h3 class="title-left">
+            Log in
+        </h3>
+    </div>
+    <form class="form-mf" #loginForm="ngForm" (ngSubmit)="handleLogin(loginForm)">
+        <div class="row">
+            <!-- old way -->
+            <!-- (change)="checkInput($event)" // to fire changeeventhandler to write data -->
+            <!-- [name]="testV"               // for read data from a property of this class-->
+
+            <div class="col-md-6 mb-3">
+                <div class="form-group">
+                    <input type="email" class="form-control input-mf" 
+                    required
+                    name="email"
+                    ngModel
+                    pattern="^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$"
+                    #email="ngModel"
+                        id="inputEmail1" placeholder="Email *">
+                </div>
+            </div>
+            
+            
+            <div class="col-md-6 mb-3">
+                <div class="form-group">
+                    <input type="password" class="form-control input-mf"
+                    required
+                    name="password"
+                    ngModel
+                    #password="ngModel"
+                    id="inputName" placeholder="Password *">
+                </div>
+            </div>
+           
+            <!-- check for errror -->
+            @if (email.touched && email.invalid) {
+                <div class="col-md-12 mb-12">
+                    <div class="alert alert-danger">
+                        @if (email.errors?.['required']) {
+                            <strong>Email</strong> field is [required].
+                        }
+                        @if(email.errors?.['pattern']){
+                            <strong>Email</strong> must be [email-formatted].
+                        }
+                    </div>
+                </div>
+            }
+
+            @if (password.touched && password.invalid) {
+                <div class="col-md-12 mb-12">
+                    <div class="alert alert-danger">
+                        <strong>Password</strong> field is [required].
+                    </div>
+                </div>
+            }
+            <!-- end checking -->
+
+            <div class="col-md-12">
+                <button type="submit" (click)="checkLogin()"
+                    class="button button-a button-big button-rouded">Go</button>
+            </div>
+
+            Don't have an account ?
+            <a class="nav-link" href="/register">Register</a>
+        </div>
+    </form>
+</div>

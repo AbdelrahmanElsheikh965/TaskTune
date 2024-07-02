@@ -1,8 +1,6 @@
 const router = require('express').Router();
 const userController = require('../controllers/UserController')
 const verifyToken = require('../middlewares/AuthMiddleware')
-
-
 const swaggerJsDoc = require('swagger-jsdoc')
 const swaggerUi = require('swagger-ui-express')
 

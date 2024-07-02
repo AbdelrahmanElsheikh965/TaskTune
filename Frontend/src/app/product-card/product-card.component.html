@@ -1,0 +1,51 @@
+
+    <div class="work-box">
+      
+      <a href="{{product.thumbnail}}" data-gallery="portfolioGallery" class="portfolio-lightbox">
+        
+        <div class="work-img">
+          <div class="widget-tags" >
+            <div class="sidebar-content" style="display: inline;">
+              <ul>
+                @if (product.stock > 0) {
+                    <li class="in-stock">
+                      <a href="#" style="text-decoration: none;">In Stock</a>
+                    </li>
+                }@else {
+                  <li class="out-of-stock">
+                    <a href="#" style="text-decoration: none;">Out of Stock</a>
+                  </li>
+                }
+              </ul>
+            </div>
+          </div>
+
+          <img src="{{product.thumbnail}}" style="height: 300px; width: 100%;" alt="" class="img-fluid">
+        </div>
+      </a>
+      
+      <div class="work-content">
+        <div class="row">
+          <div class="col-sm-8">
+            
+            <h2 class="w-title">{{product.title}}</h2>
+            <div class="w-more">
+              <span class="w-ctegory">{{product.category}}</span> / <span class="w-date">{{product.brand}}</span> <br>
+          
+              <strong> Price : </strong> 
+              <span class="w-date">{{ product.price | productDiscount : product.discountPercentage }}</span>
+
+            </div>
+            <br>
+          </div>              
+
+          <p-rating [(ngModel)]="product.rating" [readonly]="true" [cancel]="false"></p-rating>
+
+          <div class="col-md-12"> <br>
+            <button type="button" (click)="view(product.id)" class="button button-a button-small">View</button> &nbsp;
+            <button type="button" (click)="addProduct(product.id)" class="button button-a button-small">Add To Cart</button>
+          </div>
+          
+        </div>
+      </div>
+    </div>

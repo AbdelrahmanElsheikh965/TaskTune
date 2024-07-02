@@ -1,0 +1,129 @@
+<div class="form-comments">
+    <div class="title-box-2">
+        <h3 class="title-left">
+            Register
+        </h3>
+    </div>
+    <form class="form-mf" [formGroup]="RegisterForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+                <div class="form-group">
+                    <input type="text"
+                        class="form-control input-mf"
+                        formControlName="fName"
+                        id="inputEmail1" placeholder="First Name *" required>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <div class="form-group">
+                    <input type="text" 
+                    class="form-control input-mf"
+                    formControlName="lName"
+                        id="inputName" placeholder="Last Name *" required>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <div class="form-group">
+                    <input type="email" 
+                    class="form-control input-mf"
+                    formControlName="email"
+                        id="inputEmail1" placeholder="Email *" required>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <div class="form-group">
+                    <input type="password" 
+                    class="form-control input-mf"
+                    formControlName="password"
+                        id="inputName" placeholder="Password *" required>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <div class="form-group">
+                    <input type="password" class="form-control input-mf"
+                    formControlName="confirmPassword"
+                        id="inputName" placeholder="Confirm Password *" required>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <div class="form-group">
+                    <input type="Address" 
+                    class="form-control input-mf"
+                    formControlName="address"
+                        id="inputEmail1" placeholder="Address *" required>
+                </div>
+            </div>
+
+
+            @if (RegisterForm.controls['fName'].touched && RegisterForm.controls['fName'].invalid) {
+                <div class="col-md-12 mb-12">
+                    <div class="alert alert-danger">
+                        <strong>First Name</strong> field is [required].
+                    </div>
+                </div>
+            }
+
+            @if (RegisterForm.controls['lName'].touched && RegisterForm.controls['lName'].invalid) {
+                <div class="col-md-12 mb-12">
+                    <div class="alert alert-danger">
+                        <strong>Last Name</strong> field is [required].
+                    </div>
+                </div>
+            }
+
+            @if (RegisterForm.controls['email'].touched && RegisterForm.controls['email'].invalid) {
+                <div class="col-md-12 mb-12">
+                    <div class="alert alert-danger">
+                        @if (RegisterForm.controls['email'].errors?.['required']) {
+                            <strong>Email</strong> field is [required].
+                        }
+                        @if(RegisterForm.controls['email'].errors?.['pattern']){
+                            <strong>Email</strong> must be [email-formatted].
+                        }
+                    </div>
+                </div>
+            }
+
+            
+            @if (RegisterForm.controls['password'].touched && RegisterForm.controls['password'].invalid) {
+                <div class="col-md-12 mb-12">
+                    <div class="alert alert-danger">
+                        @if (RegisterForm.controls['password'].errors?.['required']) {
+                            <strong>Password</strong> field is [required].
+                        }
+                        @if(RegisterForm.controls['password'].errors?.['minlength']){
+                            <strong>Password</strong> must be [atleast 8 digits].
+                        }
+                    </div>
+                </div>
+            }
+
+
+            @if (RegisterForm.controls['address'].touched && RegisterForm.controls['address'].invalid) {
+                <div class="col-md-12 mb-12">
+                    <div class="alert alert-danger">
+                        <strong>Address</strong> field is [required].
+                    </div>
+                </div>
+            }
+            
+            <!-- @if(RegisterForm.controls['password'].touched &&
+                RegisterForm.controls['confirmPassword'].touched &&
+                 !RegisterForm.get('confirmPassword')?.hasError('required')){
+                <strong>Passwords do not match.</strong>
+            } -->
+              
+            <div class="col-md-12">
+                <button type="submit"
+                    class="button button-a button-big button-rouded">Save
+                    Data</button>
+            </div>
+        </div>
+    </form>
+</div>
