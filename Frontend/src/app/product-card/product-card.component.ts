@@ -26,9 +26,9 @@ export class ProductCardComponent {
   productsData: any;
 
   ngOnInit(){
-    this.dataService.getData().subscribe((data) => {
+    this.dataService.getServerSentEvent(`http://localhost:3000/todos/all`).subscribe((data) => {
         this.productsData = data;
-        this.productsData = this.productsData['products'];
+        this.productsData = this.productsData;
       });
     }
  

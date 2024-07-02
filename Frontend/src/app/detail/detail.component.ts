@@ -21,9 +21,9 @@ export class DetailComponent {
 
     ngOnInit(){
       const id = this.acRoute.snapshot.params['id'];
-        this.dataService.getData().subscribe((data) => {
+        this.dataService.getServerSentEvent(`http://localhost:3000/todos/all`).subscribe((data) => {
             this.productsData = data;
-            this.productsData = this.productsData['products'];
+            this.productsData = this.productsData;
             this.productDetails = this.productsData.find( (product: Product) => product.id == id )!;
           });
         
