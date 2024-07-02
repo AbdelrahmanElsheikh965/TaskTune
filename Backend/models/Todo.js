@@ -2,14 +2,41 @@ const mongoose = require('mongoose'),
        autoId = require('mongoose-auto-increment');
 
 const TodoSchema = new mongoose.Schema({
-    _id: {
-        type: Number,
-        required: true
-    },
     title: {
         type: String,
         required : true
     },
+    description: {
+        type: String,
+        required : false
+    },
+    price: {
+        type: Number
+    },
+    discountPercentage: {
+        type: Number
+    },
+    rating: {
+        type: Number
+    },
+    stock: {
+        type: Number
+    },
+    brand: {
+        type: String
+    },
+    category: {
+        type: String
+    },
+    thumbnail: {
+        type: String
+    },
+    images: {
+        type: [String]
+    },
+    // quantity: {
+    //     type: Number
+    // },
     status : {
         type: String,
         required: true,
@@ -24,11 +51,11 @@ const TodoSchema = new mongoose.Schema({
         //     message: 'Tag min length validation failed'
         //   }
     },
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Users',
-    },
+    // userId: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     required: true,
+    //     ref: 'Users',
+    // },
 }, { timestamps: true })
 
 autoId.initialize(mongoose.connection);

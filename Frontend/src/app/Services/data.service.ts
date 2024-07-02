@@ -12,7 +12,8 @@ export class DataService {
 
   getData(){
     // No need for asObservable() as get() returns observable by default.
-    return this.http.get('https://dummyjson.com/products/category/laptops');
+    this.http.get('http://localhost:3000/todos?limit=10&skip=0&status=to-do').subscribe(console.log);
+    return this.http.get('http://localhost:3000/todos?limit=10&skip=0&status=to-do');
   }
 
 

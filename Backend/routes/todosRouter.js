@@ -3,13 +3,14 @@ const todoController = require('../controllers/TodoController')
 const verifyToken = require('../middlewares/AuthMiddleware')
 
 // User can read his todos
-router.get('/', verifyToken, async (req, res) => {
-    const todos = await todoController.readUserTodos(req);
+router.get('/', /*verifyToken,*/ async (req, res) => {
+    // const todos = await todoController.readUserTodos(req);
+    const todos = await todoController.read(req);
     res.status(200).json(todos);
 });
 
 // User can add a new todo
-router.post('/', verifyToken, async (req, res) => {
+router.post('/', /*verifyToken,*/ async (req, res) => {
     const created = await todoController.create(req, res);        
     res.status(200).json(created);
 });

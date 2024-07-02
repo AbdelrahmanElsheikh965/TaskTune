@@ -19,7 +19,7 @@ constructor(private dataService: DataService){}
 ngOnInit(){
     this.dataService.getData().subscribe((data) => {
       this.productsData = data;
-      this.productsData = this.productsData['products'];
+      this.productsData = this.productsData;
     });
   }
       
