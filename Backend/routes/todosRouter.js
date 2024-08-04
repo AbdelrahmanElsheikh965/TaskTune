@@ -2,6 +2,11 @@ const router = require('express').Router();
 const todoController = require('../controllers/TodoController')
 const verifyToken = require('../middlewares/AuthMiddleware')
 
+// User can add a new todo
+router.get('/', /*verifyToken,*/ async (req, res) => {
+    const data = await todoController.read(req);        
+    res.status(200).json(data);
+});
 
 // User can add a new todo
 router.post('/', /*verifyToken,*/ async (req, res) => {

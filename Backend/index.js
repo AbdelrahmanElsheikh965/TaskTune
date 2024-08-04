@@ -46,8 +46,8 @@ app.get(
   "/todos/all",
   /*verifyToken,*/ async (req, res) => {
     res.setHeader("Content-Type", "text/event-stream");
+    // res.setHeader("Connection", "keep-alive");
     res.setHeader("Cache-Control", "no-cache");
-    res.setHeader("Connection", "keep-alive");
 
     // flush the headers to establish SSE with the client intead of waiting the body.
     /**
@@ -59,7 +59,7 @@ app.get(
      *  is sent or the response is ended. By calling res.flushHeaders(), you force the headers 
      *  to be sent immediately without waiting for the body.
      */
-    res.flushHeaders();
+    // res.flushHeaders();
 
     const sendUpdatedTodos = async () => {
       try {
@@ -74,6 +74,7 @@ app.get(
 
     sendUpdatedTodos();
 
+    // replica set
     const changeStream = Todo.watch();
 
     // Listen for change events

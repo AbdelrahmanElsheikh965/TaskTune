@@ -19,18 +19,18 @@ import { ListComponent } from '../list/list.component';
 })
 export class ProductCardComponent {
 
-  
+  private eventSource!: EventSource;
   constructor(private dataService: DataService, private routeObj : Router, private cartService: CartService){}
 
   @Input() product!: Product;
   productsData: any;
 
-  ngOnInit(){
-    this.dataService.getServerSentEvent(`http://localhost:3000/todos/all`).subscribe((data) => {
-        this.productsData = data;
-        this.productsData = this.productsData;
-      });
-    }
+  ngOnInit() {
+    // this.eventSource = this.dataService.getDataSSE();    
+    // this.eventSource.onmessage = (event) => {       
+    //     this.productsData = JSON.parse(event.data);
+    // };
+  }
  
   view(id: number){
     this.routeObj.navigate(['details', id])

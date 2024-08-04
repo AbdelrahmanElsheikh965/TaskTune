@@ -20,13 +20,12 @@ export class DetailComponent {
     productsData: any;
 
     ngOnInit(){
-      const id = this.acRoute.snapshot.params['id'];
-        this.dataService.getServerSentEvent(`http://localhost:3000/todos/all`).subscribe((data) => {
-            this.productsData = data;
-            this.productsData = this.productsData;
-            this.productDetails = this.productsData.find( (product: Product) => product.id == id )!;
-          });
-        
+      // const id = this.acRoute.snapshot.params['id'];
+      //   this.dataService.getServerSentEvent(`http://localhost:3000/todos/all`).subscribe((data) => {
+      //       this.productsData = data;
+      //       this.productsData = this.productsData;
+      //       this.productDetails = this.productsData.find( (product: Product) => product.id == id )!;
+      //     });        
     }
 
 }

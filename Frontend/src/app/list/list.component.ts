@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, SimpleChanges } from '@angular/core';
 import { DetailComponent } from "../detail/detail.component";
 import { HeaderComponent } from "../header/header.component";
 import { ContainerComponent } from '../container/container.component';
@@ -8,6 +8,7 @@ import { ProductDiscountPipe } from '../Pipes/product-discount.pipe';
 import { ProductIntPricePipe } from '../Pipes/product-int-price.pipe';
 import { ProductCardComponent } from '../product-card/product-card.component';
 import { HttpClient } from '@angular/common/http';
+import { DataService } from '../Services/data.service';
 
 @Component({
     selector: 'app-list',
@@ -18,8 +19,23 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ListComponent {
 
-    constructor(private routeObj : Router){}
+  @Input() ReceivedData!: any;
 
-    @Input() ReceivedData: any;
+  constructor(private cdr: ChangeDetectorRef, private dataService: DataService) {}
+  private eventSource!: EventSource;
+
+  ngOnInit(){
+
+    this.dataService.getDataSSE().subscribe({
+        next: data => {
+          this.ReceivedData = data;
+          console.log("Data in list:", this.ReceivedData);
+        },
+        error: err => {
+          console.error('SSE Error:', err);
+        }
+      });    
+    
+  }
    
 }
